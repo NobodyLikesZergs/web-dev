@@ -1,0 +1,12 @@
+{% extends 'core/base.html' %}
+{% block content %}
+  {% if object.author = user %}
+    <form method='post'>
+      {% csrf_token %}
+      {{ form }}
+      <input type='submit'>
+    </form>
+  {% else %}
+    <div> You have no permission </div>
+  {% endif %}
+{% endblock %}

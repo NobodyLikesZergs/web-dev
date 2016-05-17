@@ -1,0 +1,15 @@
+{% if user.is_authenticated %}
+  <div>{{ user }}</div>
+  <form action="/logout/">
+    <button type="submit"> Logout</button>
+  </form>
+{% else %}
+  <form action="/login/">
+    <button type="submit"> Login</button>
+  </form>
+  <form action="/signup/">
+    <button type="submit"> Signup</button>
+  </form>
+{% endif %}
+{% block title %}{% endblock %}
+{% block content %}{% endblock %}

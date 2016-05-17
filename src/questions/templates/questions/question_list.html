@@ -1,0 +1,29 @@
+{% extends "core/base.html" %}
+{% block title %}Список вопросов{% endblock %}
+{% block content %}
+  <form>
+    {{form}}
+    <input type="submit">
+  </form>
+  {% for q in object_list %}
+    <div>
+      <div>--------------------</div>
+      <div> 
+        Author: {{ q.author }}
+        {% if q.author = user %}
+          <form action="/questions/{{q.id}}/update">
+            <button type="submit"> Edit </button>
+          </form>
+        {% endif %}
+      </div>
+      <div>Title: <a href='/questions/{{q.id}}'> {{q.title}}</a></div>
+      <div>Text: {{q.text}}</div>
+      <div>Created at: {{ q.created_at}}</div>
+    </div>
+  {% endfor %}
+  {% if user.is_authenticated %}
+    <form action="/questions/create/">
+      <button type="submit"> Create question </button>
+    </form>
+  {% endif %}
+{% endblock %}

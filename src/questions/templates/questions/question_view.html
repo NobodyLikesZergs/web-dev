@@ -1,0 +1,35 @@
+{% extends "core/base.html" %}
+{% block title %}Question №{{question.id}}{% endblock %}
+{% block content %}
+  <div>
+    <div> Author: {{question.author}}</div>
+    <div> Title: {{question.title}}</div>
+    <div> Text: {{question.text}}</div>
+    <div> Created at: {{question.created_at}}</div>
+    {% if question.author = user %}
+      <form action="update/">
+        <button type="submit">Edit</button>
+      </form>
+    {% endif %}
+  </div>
+  {% for comment in question.comment_set.all %}
+  <div>
+    <div>------------------------</div>
+    {% if comment.author = user %}
+      <form action=/comments/{{comment.pk}}/update>
+        <button type="submit">Edit</button>
+      </form>
+    {% endif %}
+    <div>Author: {{ comment.author }} </div>
+    <div>Text:       {{ comment.text}}</div>
+    <div>Created at: {{ comment.created_at}}</div>
+  </div>
+  {% endfor %}
+  {% if user.is_authenticated %}
+    <form method='post'>
+      {% csrf_token %}
+      {{ form }}
+      <input type='submit'>
+    </form>
+  {% endif %}
+{% endblock %}
