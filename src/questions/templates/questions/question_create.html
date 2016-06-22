@@ -1,8 +1,12 @@
 {% extends 'core/base.html' %}
+{% block title %}Create Question{% endblock %}
 {% block content %}
-  <form method='post'>
-    {% csrf_token %}
-    {{ form }}
-    <input type='submit'>
-  </form>
+<form method='post' class="">
+   {% csrf_token %}
+   {% for field in form %}
+   <h4>{{ field.label_tag }}</h4>
+   {{ field }}
+   {% endfor %}
+   <input type='submit' class="btn navbar-bot">
+</form>
 {% endblock %}

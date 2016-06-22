@@ -10,20 +10,19 @@
 {% for q in object_list %}
 <hr>
 <div>
-   <div>
-      <h3>Author: {{ q.author }}</h3>
-      {% if q.author = user %}
-      <form action="/questions/{{q.id}}/update" class="navbar-right">
-         <button type="submit" class="btn"> Edit </button>
-      </form>
-      {% endif %}
-   </div>
-   <h4>Title: <a href='/questions/{{q.id}}'> {{q.title}}</a></h4>
+   <h3><a href='/questions/{{q.id}}'> {{q.title}}</a></h3>
+   <h4>Author: {{ q.author }}</h4>
    <h4>Text: {{q.text}}</h4>
    <h5>Created at: {{ q.created_at}}</h5>
+   {% if q.author = user %}
+   <form action="/questions/{{q.id}}/update" class="navbar-top">
+      <button type="submit" class="btn"> Edit </button>
+   </form>
+   {% endif %}
 </div>
 {% endfor %}
 {% if user.is_authenticated %}
+<hr>
 <form action="/questions/create/">
    <button type="submit" class="btn" > Create question </button>
 </form>

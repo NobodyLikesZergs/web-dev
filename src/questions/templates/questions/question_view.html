@@ -2,37 +2,48 @@
 {% block title %}Question №{{question.id}}{% endblock %}
 {% block content %}
 <div>
-   <h3> Author: {{question.author}} </h3>
-   <h4> Title: {{question.title}} </h4>
-   <h4> Text: {{question.text}} </h4>
-   <h5> Created at: {{question.created_at}} </h5>
-   {% if question.author = user %}
-   <form action="update/" class="navbar-right">
+   <div>
+      {% if comment.author = user %}
+      <form action="/questions/{{q.id}}/update" class="navbar-right">
+         <button type="submit" class="btn">Edit</button>
+      </form>
+      {% endif %}
+   </div>
+   <div>
+      <h3> Title: {{question.title}} </h3>
+      <h4> Author: {{question.author}} </h4>
+      <h4> Text: {{question.text}} </h4>
+      <h5> Created at: {{question.created_at}} </h5>
+      {% if question.author = user %}
+      <form action="update/" class=" navbar-top">
+         <button type="submit" class="btn">Edit</button>
+      </form>
+   </div>
+   {% endif %}
+</div>
+<hr>
+<h2> Comments:</h2>
+{% for comment in question.comment_set.all %}
+<div>
+   <h4>Author: {{ comment.author }} </h4>
+   <h5>Text:       {{ comment.text}}</h5>
+   <h6>Created at: {{ comment.created_at}}</h6>
+   {% if comment.author = user %}
+   <form action=/comments/{{comment.pk}}/update class="navbar-bot">
       <button type="submit" class="btn">Edit</button>
    </form>
    {% endif %}
-</div>
-{% for comment in question.comment_set.all %}
-<div>
-<hr>
-{% if comment.author = user %}
-<form action="/questions/{{q.id}}/update" class="navbar-right">
-   <button type="submit" class="btn">Edit</button>
-</form>
-{% endif %}
-<h4>Author: {{ comment.author }} </h4>
-<h5>Text:       {{ comment.text}}</h5>
-<h6>Created at: {{ comment.created_at}}</h6>
-{% endfor %}
-{% if user.is_authenticated %}
-<hr>
-<form method='post' >
-   {% csrf_token %}
-   {% for field in form %}
-   <h4>{{ field.label_tag }}</h4>
-   {{ field }}
+   <hr>
    {% endfor %}
-   <input type='submit'>
-</form>
+   {% if user.is_authenticated %}
+   <form method='post' >
+      {% csrf_token %}
+      {% for field in form %}
+      <h4>{{ field.label_tag }}</h4>
+      {{ field }}
+      {% endfor %}
+      <input type='submit' class="btn">
+   </form>
+</div>
 {% endif %}
 {% endblock %}

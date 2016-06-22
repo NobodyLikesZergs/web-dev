@@ -1,12 +1,12 @@
 {% extends 'core/base.html' %}
+{% block title %}Create Question{% endblock %}
 {% block content %}
-  {% if object.author = user %}
-    <form method='post'>
-      {% csrf_token %}
-      {{ form }}
-      <input type='submit'>
-    </form>
-  {% else %}
-    <div> You have no permission </div>
-  {% endif %}
+<form method='post' class="">
+   {% csrf_token %}
+   {% for field in form %}
+   <h4>{{ field.label_tag }}</h4>
+   {{ field }}
+   {% endfor %}
+   <input type='submit' class="btn navbar-bot">
+</form>
 {% endblock %}
