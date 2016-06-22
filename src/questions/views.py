@@ -8,7 +8,7 @@ from .forms import QuestionListForm
 class QuestionList(ListView):
     model = Question
     template_name = 'questions/question_list.html'
-    form = QuestionListForm()
+    qform = QuestionListForm()
 
     def dispatch(self, request, *args, **kwargs):
         self.form = QuestionListForm(data=request.GET)
@@ -26,7 +26,7 @@ class QuestionList(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(QuestionList, self).get_context_data(**kwargs)
-        context['form'] = self.form
+        context['qform'] = self.qform
         return context
 
 

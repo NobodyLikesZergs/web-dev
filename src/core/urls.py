@@ -5,7 +5,7 @@ from django.contrib.auth.views import logout
 
 urlpatterns = [
     url(r'^login/$', LoginFormView.as_view(), name='login'),
-    url(r'^logout/$', logout, {'template_name': 'core/logout.html'},
+    url(r'^logout/$', logout, {'next_page': '/'},
         name='logout'),
     url(r'signup/$', RegisterFormView.as_view(), name='user_create'),
 ]

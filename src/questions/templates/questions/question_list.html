@@ -1,29 +1,31 @@
 {% extends "core/base.html" %}
-{% block title %}Список вопросов{% endblock %}
+{% block search %}
+{% for field in qform %}
+{{ field.label_tag }}: {{ field }}
+{% endfor %}
+<input type="submit" class="btn btn-success">
+{% endblock %}
+{% block title %}Question List{% endblock %}
 {% block content %}
-  <form>
-    {{form}}
-    <input type="submit">
-  </form>
-  {% for q in object_list %}
-    <div>
-      <div>--------------------</div>
-      <div> 
-        Author: {{ q.author }}
-        {% if q.author = user %}
-          <form action="/questions/{{q.id}}/update">
-            <button type="submit"> Edit </button>
-          </form>
-        {% endif %}
-      </div>
-      <div>Title: <a href='/questions/{{q.id}}'> {{q.title}}</a></div>
-      <div>Text: {{q.text}}</div>
-      <div>Created at: {{ q.created_at}}</div>
-    </div>
-  {% endfor %}
-  {% if user.is_authenticated %}
-    <form action="/questions/create/">
-      <button type="submit"> Create question </button>
-    </form>
-  {% endif %}
+{% for q in object_list %}
+<hr>
+<div>
+   <div>
+      <h3>Author: {{ q.author }}</h3>
+      {% if q.author = user %}
+      <form action="/questions/{{q.id}}/update" class="navbar-right">
+         <button type="submit" class="btn"> Edit </button>
+      </form>
+      {% endif %}
+   </div>
+   <h4>Title: <a href='/questions/{{q.id}}'> {{q.title}}</a></h4>
+   <h4>Text: {{q.text}}</h4>
+   <h5>Created at: {{ q.created_at}}</h5>
+</div>
+{% endfor %}
+{% if user.is_authenticated %}
+<form action="/questions/create/">
+   <button type="submit" class="btn" > Create question </button>
+</form>
+{% endif %}
 {% endblock %}
